@@ -4,16 +4,32 @@
       <div class="glass-card main-info">
         <div class="profile-section">
           <div class="avatar-glow">
-            <img src="../../public/594977173_122108288649111909_4906740666882839559_n.jpg" alt="RILLZO" class="avatar">
+            <img
+              src="../../public/profile.jpg"
+              alt="RILLZO"
+              class="avatar"
+            >
           </div>
-          <h1 class="neon-title">AbdUlrahMan Elsaid</h1>
-          <p class="role">InfoSec Enthusiast | Full-Stack Developer</p>
+          <h1 class="neon-title">
+            AbdUlrahMan Elsaid
+          </h1>
+          <p class="role">
+            InfoSec Enthusiast | Full-Stack Developer
+          </p>
           
           <div class="social-badges">
-            <a href="https://www.youtube.com/@NullSpecterAcademy" target="_blank" class="social-link">
+            <a
+              href="https://www.youtube.com/@NullSpecterAcademy"
+              target="_blank"
+              class="social-link"
+            >
               <span class="badge yt">YouTube</span>
             </a>
-            <a href="https://discord.gg/jacRHySAv2" target="_blank" class="social-link">
+            <a
+              href="https://discord.gg/jacRHySAv2"
+              target="_blank"
+              class="social-link"
+            >
               <span class="badge tg">Discord</span>
             </a>
           </div>

@@ -46,28 +46,37 @@
 
               <div class="card-footer">
                 <div class="card-meta">
+                  
                   <span
                     class="price-tag"
-                    :class="
-                      isLimitedDeal(course.category)
-                        ? 'discount-text'
-                        : 'free-text'
-                    "
+                    :class="{
+                      'free-text': course.price === 'Free',
+                      'discount-text': course.price !== 'Free'
+                    }"
                   >
-                    {{ isLimitedDeal(course.category) ? "100% OFF" : "FREE" }}
+                    {{ course.price }}
                   </span>
                   <span class="status-dot" />
                   <span class="time">متاح الآن</span>
                 </div>
 
-                <a
-                  :href="course.udemyLink"
-                  target="_blank"
-                  class="cyber-btn"
-                >
-                  <span>Get Coupon </span>
-                  <i class="fas fa-bolt" />
-                </a>
+                <div class="action-buttons">
+                  <router-link
+                    :to="'/course/' + course._id"
+                    class="info-btn"
+                  >
+                    التفاصيل
+                  </router-link>
+
+                  <a
+                    :href="course.udemyLink"
+                    target="_blank"
+                    class="cyber-btn"
+                  >
+                    <span>Get Coupon </span>
+                    <i class="fas fa-bolt" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -90,7 +99,7 @@
 </template>
 
 <script>
-import api from "@/api";
+import api from "@/api"; // السنترال الخاص بك المربوط بـ Vercel/Replit
 export default {
   data() {
     return {
@@ -104,7 +113,7 @@ export default {
       const res = await api.get("/courses/all");
       this.courses = res.data;
     } catch (e) {
-      console.error(e);
+      console.error("خطأ في جلب الكورسات:", e);
     } finally {
       this.loading = false;
     }
@@ -121,14 +130,13 @@ export default {
 
 <style scoped>
 .home-page {
-  padding-top: clamp(80px, 15vh, 120px); /* حشو مرن حسب ارتفاع الشاشة */
+  padding-top: clamp(80px, 15vh, 120px);
   min-height: 100vh;
   position: relative;
   background: #0a0a12;
-  overflow-x: hidden; /* منع التمرير الأفقي في الشاشات الصغيرة */
+  overflow-x: hidden;
 }
 
-/* توهج الخلفية مرن */
 .hero-glow {
   position: absolute;
   top: -100px;
@@ -147,11 +155,11 @@ export default {
 .main-header {
   text-align: center;
   margin-bottom: clamp(30px, 8vw, 60px);
-  padding: 0 20px; /* ضمان عدم التصاق النص بالحواف */
+  padding: 0 20px;
 }
 
 .glitch-text {
-  font-size: clamp(1.8rem, 8vw, 3.5rem); /* خط يتجاوب مع الشاشة */
+  font-size: clamp(1.8rem, 8vw, 3.5rem);
   font-weight: 900;
   background: linear-gradient(135deg, #ffffff 30%, #a435f0 100%);
   -webkit-background-clip: text;
@@ -162,7 +170,6 @@ export default {
 
 .grid-layout {
   display: grid;
-  /* توزيع ذكي للكروت بناءً على العرض المتاح */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: clamp(15px, 3vw, 35px);
   width: 100%;
@@ -171,7 +178,6 @@ export default {
   padding: 0 clamp(15px, 5vw, 40px) 80px;
 }
 
-/* الأنماط الأصلية للكروت */
 .cyber-card {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 24px;
@@ -202,7 +208,7 @@ export default {
 
 .img-box {
   position: relative;
-  aspect-ratio: 16 / 9; /* الحفاظ على أبعاد الصورة في كل الشاشات */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
@@ -236,7 +242,61 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-/* أنيميشن الدوامة المائية */
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ✅ حاوية الأزرار الجديدة */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.info-btn {
+  flex: 1;
+  background: rgba(164, 53, 240, 0.1);
+  color: #a435f0;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid rgba(164, 53, 240, 0.3);
+  transition: 0.3s;
+}
+
+.info-btn:hover {
+  background: rgba(164, 53, 240, 0.2);
+  border-color: #a435f0;
+}
+
+.cyber-btn {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #a435f0, #6e21a8);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(164, 53, 240, 0.3);
+}
+
 .loading-state {
   display: flex;
   justify-content: center;
@@ -266,59 +326,26 @@ export default {
   animation: water-ripple-expand 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
 }
-.water-vortex span:nth-child(2) {
-  animation-delay: 0s;
-}
-.water-vortex span:nth-child(3) {
-  animation-delay: 0.6s;
-}
-.water-vortex span:nth-child(4) {
-  animation-delay: 1.2s;
-}
+.water-vortex span:nth-child(2) { animation-delay: 0s; }
+.water-vortex span:nth-child(3) { animation-delay: 0.6s; }
+.water-vortex span:nth-child(4) { animation-delay: 1.2s; }
 
 @keyframes water-ripple-expand {
-  0% {
-    width: 12px;
-    height: 12px;
-    opacity: 1;
-  }
-  100% {
-    width: clamp(100px, 30vw, 180px);
-    height: clamp(100px, 30vw, 180px);
-    opacity: 0;
-  }
+  0% { width: 12px; height: 12px; opacity: 1; }
+  100% { width: clamp(100px, 30vw, 180px); height: clamp(100px, 30vw, 180px); opacity: 0; }
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ميديا كويري للموبايل الصغير لضمان استقرار الكروت */
 @media (max-width: 600px) {
-  .home-page {
-    padding-top: 80px;
-  }
-  .grid-layout {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .cyber-card {
-    transform: none !important;
-    opacity: 1;
-  }
-  .cyber-card:active {
-    transform: scale(0.98) !important;
-  }
+  .grid-layout { grid-template-columns: 1fr; gap: 20px; }
+  .cyber-card { transform: none !important; opacity: 1; }
+  .action-buttons { flex-direction: row; } /* بقاء الأزرار بجانب بعضها في الموبايل */
 }
 
-/* باقي الأنماط الأصلية كما هي */
 .badge-wrapper {
   position: absolute;
   top: 15px;
@@ -332,9 +359,7 @@ export default {
   color: white;
   font-weight: 700;
 }
-.limited-badge {
-  background: linear-gradient(45deg, #ff416c, #ff4b2b) !important;
-}
+.limited-badge { background: linear-gradient(45deg, #ff416c, #ff4b2b) !important; }
 .img-overlay {
   position: absolute;
   bottom: 0;
@@ -350,32 +375,8 @@ export default {
   border-radius: 50%;
   box-shadow: 0 0 8px #00ff88;
 }
-.price-tag {
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-.free-text {
-  color: #00ff88;
-}
-.discount-text {
-  color: #ff3e3e;
-}
-.time {
-  font-size: 0.8rem;
-  color: #a0a0b0;
-}
-.cyber-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: linear-gradient(90deg, #a435f0, #6e21a8);
-  color: #fff;
-  text-decoration: none;
-  padding: 14px;
-  border-radius: 14px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(164, 53, 240, 0.3);
-}
+.price-tag { font-size: 1.1rem; font-weight: 800; }
+.free-text { color: #00ff88; }
+.discount-text { color: #ff3e3e; }
+.time { font-size: 0.8rem; color: #a0a0b0; }
 </style>

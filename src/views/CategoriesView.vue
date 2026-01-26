@@ -81,14 +81,23 @@
                   </div>
                 </div>
 
-                <a
-                  :href="course.udemyLink"
-                  target="_blank"
-                  class="action-btn"
-                >
-                  <span> Get the course</span>
-                  <i class="fas fa-bolt" />
-                </a>
+                <div class="action-buttons">
+                  <router-link
+                    :to="'/course/' + course._id"
+                    class="info-btn"
+                  >
+                    التفاصيل
+                  </router-link>
+
+                  <a
+                    :href="course.udemyLink"
+                    target="_blank"
+                    class="action-btn"
+                  >
+                    <span>Get Coupon</span>
+                    <i class="fas fa-bolt" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -148,6 +157,9 @@ export default {
     isLimited(cat) {
       return cat && (cat.includes("100% Off") || cat.includes("Scorpion"));
     },
+    formatDate(date) { 
+      return new Date(date).toLocaleDateString('ar-EG'); 
+    }
   },
 };
 </script>
@@ -342,11 +354,16 @@ export default {
   -webkit-box-orient: vertical;
 }
 
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .price-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 .free-price {
   color: #00ff88;
@@ -376,12 +393,39 @@ export default {
   animation: pulse 1.5s infinite;
 }
 
+/* ✅ أنماط الأزرار المحدثة */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.info-btn {
+  flex: 1;
+  background: rgba(164, 53, 240, 0.1);
+  color: #a435f0;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid rgba(164, 53, 240, 0.3);
+  transition: 0.3s;
+}
+
+.info-btn:hover {
+  background: rgba(164, 53, 240, 0.2);
+  border-color: #a435f0;
+}
+
 .action-btn {
+  flex: 1.5;
   background: linear-gradient(90deg, #a435f0, #7b2cbf);
   color: #fff;
   text-decoration: none;
-  padding: 15px;
-  border-radius: 16px;
+  padding: 12px;
+  border-radius: 12px;
   text-align: center;
   font-weight: 800;
   display: flex;
@@ -389,25 +433,20 @@ export default {
   justify-content: center;
   gap: 10px;
   transition: 0.3s;
+  font-size: 0.9rem;
 }
+
 .action-btn:hover {
   box-shadow: 0 0 20px rgba(164, 53, 240, 0.6);
-  transform: scale(1.02);
+  transform: translateY(-2px);
 }
 
 @keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    opacity: 1;
-  }
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
 }
 
-/* ستايلات لودر الدوامة المائية (Water Ripple Vortex) */
 .loading-state {
   display: flex;
   justify-content: center;
@@ -441,28 +480,13 @@ export default {
   opacity: 0;
 }
 
-/* توزيع الحلقات لخلق تأثير الدوامة المستمرة */
-.water-vortex span:nth-child(2) {
-  animation-delay: 0s;
-}
-.water-vortex span:nth-child(3) {
-  animation-delay: 0.6s;
-}
-.water-vortex span:nth-child(4) {
-  animation-delay: 1.2s;
-}
+.water-vortex span:nth-child(2) { animation-delay: 0s; }
+.water-vortex span:nth-child(3) { animation-delay: 0.6s; }
+.water-vortex span:nth-child(4) { animation-delay: 1.2s; }
 
 @keyframes water-ripple-expand {
-  0% {
-    width: 12px;
-    height: 12px;
-    opacity: 1;
-  }
-  100% {
-    width: 180px;
-    height: 180px;
-    opacity: 0;
-  }
+  0% { width: 12px; height: 12px; opacity: 1; }
+  100% { width: 180px; height: 180px; opacity: 0; }
 }
 
 @media (max-width: 768px) {
@@ -473,12 +497,11 @@ export default {
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
   }
-  .category-chip {
-    white-space: nowrap;
-  }
+  .category-chip { white-space: nowrap; }
   .grid-layout {
     grid-template-columns: 1fr;
     padding: 0 20px 80px;
   }
+  .action-buttons { flex-direction: row; }
 }
 </style>

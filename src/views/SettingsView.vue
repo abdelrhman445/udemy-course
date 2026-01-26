@@ -2,14 +2,20 @@
   <div class="settings-page">
     <div class="hero-glow" />
 
-    <div v-if="loading" class="vortex-container">
+    <div
+      v-if="loading"
+      class="vortex-container"
+    >
       <div class="water-vortex">
         <div class="core-point" />
         <span /><span /><span />
       </div>
     </div>
 
-    <div v-else class="settings-container">
+    <div
+      v-else
+      class="settings-container"
+    >
       <header class="settings-header">
         <i class="fas fa-user-cog settings-icon" />
         <h1>إعدادات الحساب</h1>
@@ -39,7 +45,10 @@
             </div>
 
             <transition name="fade">
-              <div v-if="form.currentPassword" class="input-group">
+              <div
+                v-if="form.currentPassword"
+                class="input-group"
+              >
                 <label>كلمة المرور الجديدة</label>
                 <input
                   v-model="form.newPassword"
@@ -49,7 +58,10 @@
               </div>
             </transition>
 
-            <button type="submit" class="save-btn">
+            <button
+              type="submit"
+              class="save-btn"
+            >
               حفظ التغييرات
             </button>
           </form>
@@ -60,7 +72,10 @@
           <p>بمجرد حذف حسابك، لن تتمكن من استعادة بياناتك مرة أخرى.</p>
           
           <transition name="fade">
-            <div v-if="showDeletePrompt" class="delete-verify-zone">
+            <div
+              v-if="showDeletePrompt"
+              class="delete-verify-zone"
+            >
               <div class="input-group">
                 <label>أدخل كلمة المرور لتأكيد الحذف النهائي</label>
                 <input
@@ -71,8 +86,18 @@
                 >
               </div>
               <div class="delete-actions">
-                <button class="confirm-delete-btn" @click="confirmDelete">تأكيد الحذف</button>
-                <button class="cancel-btn" @click="showDeletePrompt = false; passwordForDelete = ''">إلغاء</button>
+                <button
+                  class="confirm-delete-btn"
+                  @click="confirmDelete"
+                >
+                  تأكيد الحذف
+                </button>
+                <button
+                  class="cancel-btn"
+                  @click="showDeletePrompt = false; passwordForDelete = ''"
+                >
+                  إلغاء
+                </button>
               </div>
             </div>
           </transition>

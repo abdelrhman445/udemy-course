@@ -26,6 +26,16 @@ const routes = [
     name: "settings",
     component: () => import("../views/SettingsView.vue"),
   },
+  {
+  path: '/search',
+  name: 'SearchResults',
+  component: () => import('../views/SearchResultsView.vue')
+},
+{
+  path: '/course/:id', 
+  name: 'CourseDetails',
+  component: () => import('../views/CourseDetails.vue')
+}
 ];
 
 const router = createRouter({

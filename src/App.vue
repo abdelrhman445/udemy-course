@@ -9,6 +9,19 @@
           UDEMY<span>FREE</span>
         </div>
 
+        <div class="search-wrapper">
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="ابحث عن دورتك اللتي تريدها..." 
+            @keyup.enter="handleSearch"
+            class="search-input"
+          >
+          <button @click="handleSearch" class="search-btn">
+            <span>🔍</span>
+          </button>
+        </div>
+
         <div
           class="nav-links"
           :class="{ 'mobile-active': isMenuOpen }"
@@ -78,6 +91,7 @@
         </div>
       </div>
     </nav>
+
     <router-view @auth-change="checkAuth" />
   </div>
 </template>
@@ -89,11 +103,14 @@ export default {
       isScrolled: false,
       isMenuOpen: false,
       isLoggedIn: false,
+      searchQuery: "", // كلمة البحث
     };
   },
   watch: {
     $route() {
       this.checkAuth();
+      // تصغير المنيو عند الانتقال لصفحة جديدة
+      this.isMenuOpen = false;
     },
   },
   mounted() {
@@ -106,6 +123,19 @@ export default {
     checkAuth() {
       const token = localStorage.getItem("token");
       this.isLoggedIn = !!token;
+    },
+    // ✅ المنطق الجديد للبحث: التحويل لصفحة مستقلة
+    handleSearch() {
+      if (!this.searchQuery.trim()) return;
+      
+      // التوجيه لصفحة البحث مع الكلمة المطلوبة في الرابط
+      this.$router.push({
+        path: '/search',
+        query: { q: this.searchQuery }
+      });
+
+      // مسح كلمة البحث من الهيدر بعد الضغط (اختياري)
+      // this.searchQuery = ""; 
     },
     handleLogout() {
       localStorage.removeItem("token");
@@ -121,6 +151,7 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap");
 
+/* التنسيقات الأساسية */
 * {
   margin: 0;
   padding: 0;
@@ -133,6 +164,7 @@ body {
   overflow-x: hidden;
 }
 
+/* الهيدر */
 .navbar {
   position: fixed;
   top: 0;
@@ -144,7 +176,7 @@ body {
 
 .nav-scrolled {
   padding: 15px 0;
-  background: rgba(11, 11, 21, 0.7);
+  background: rgba(11, 11, 21, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(164, 53, 240, 0.3);
 }
@@ -159,10 +191,48 @@ body {
   direction: rtl;
 }
 
+/* تنسيق البحث */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(164, 53, 240, 0.3);
+  border-radius: 50px;
+  padding: 5px 15px;
+  margin: 0 20px;
+  flex: 0 1 400px;
+  transition: 0.3s;
+}
+.search-wrapper:focus-within {
+  border-color: #a435f0;
+  box-shadow: 0 0 15px rgba(164, 53, 240, 0.2);
+}
+.search-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 8px;
+  width: 100%;
+  outline: none;
+  font-size: 0.9rem;
+}
+.search-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #a435f0;
+  font-size: 1.1rem;
+  transition: 0.3s;
+}
+.search-btn:hover {
+  transform: scale(1.2);
+}
+
 .logo {
   font-size: 1.8rem;
   font-weight: 900;
   color: #fff;
+  flex-shrink: 0;
 }
 .logo span {
   color: #a435f0;
@@ -180,6 +250,7 @@ body {
   font-weight: 700;
   transition: 0.3s;
   position: relative;
+  white-space: nowrap;
 }
 .nav-links a:hover,
 .router-link-active {
@@ -193,14 +264,13 @@ body {
   margin-right: 20px;
 }
 
-/* قسم إعدادات الحساب المطور */
+/* إعدادات الحساب */
 .user-meta {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-right: 35px;
+  gap: 15px;
+  margin-right: 30px;
 }
-
 .user-badge {
   color: #fff !important;
   font-weight: 700;
@@ -208,16 +278,14 @@ body {
   padding: 8px 18px;
   border-radius: 12px;
   border: 1px solid rgba(164, 53, 240, 0.4);
-  font-size: 0.95rem;
-  text-decoration: none !important; /* إزالة الخط تحت الرابط */
+  font-size: 0.9rem;
+  text-decoration: none !important;
   transition: 0.3s;
 }
 .user-badge:hover {
   background: rgba(164, 53, 240, 0.2);
-  box-shadow: 0 0 15px rgba(164, 53, 240, 0.3);
   transform: translateY(-2px);
 }
-
 .logout-link {
   background: transparent;
   color: #ff4d4d;
@@ -227,11 +295,6 @@ body {
   cursor: pointer;
   font-weight: 700;
   transition: 0.3s;
-}
-.logout-link:hover {
-  background: #ff4d4d;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
 }
 
 .burger {
@@ -247,10 +310,21 @@ body {
   transition: 0.4s;
 }
 
+/* الموبايل */
+@media (max-width: 1024px) {
+  .search-wrapper {
+    flex: 1;
+    margin: 0 15px;
+  }
+}
+
 @media (max-width: 850px) {
   .burger {
     display: flex;
     z-index: 2001;
+  }
+  .search-wrapper {
+    display: none;
   }
   .nav-links {
     position: fixed;
@@ -262,6 +336,7 @@ body {
     flex-direction: column;
     padding-top: 100px;
     transition: 0.5s;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
   }
   .nav-links.mobile-active {
     right: 0;

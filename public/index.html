@@ -1,22 +1,110 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    
-    <title>UDEMYFREE | منجم الكورسات المجانية وأقوى الكوبونات 🚀</title>
-    
-    <meta name="description" content="احصل على أحدث كورسات يوديمي المدفوعة مجاناً مع UDEMYFREE. كوبونات محدثة كل 5 دقائق في البرمجة، التصميم، والأمن السيبراني.">
+    <!-- ================= Core ================= -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ================= Title ================= -->
+    <title>UDEMYFREE</title>
+
+    <!-- ================= SEO ================= -->
+    <meta
+      name="description"
+      content="كورسات يوديمي مدفوعة مجاناً عبر كوبونات محدثة باستمرار في البرمجة، التصميم، والأمن السيبراني ،وكل المجالات."
+    />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="content-language" content="ar" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- ================= Canonical ================= -->
+    <link
+      rel="canonical"
+      href="https://udemy-course-coupon.vercel.app/"
+    />
+
+    <!-- ================= Favicons ================= -->
+    <link
+      rel="icon"
+      href="<%= BASE_URL %>favicon.svg"
+      type="image/svg+xml"
+    />
+    <link
+      rel="icon"
+      href="<%= BASE_URL %>favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="<%= BASE_URL %>apple-touch-icon.png"
+    />
+
+    <!-- ================= PWA / Theme ================= -->
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- ================= Open Graph ================= -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:site_name" content="UDEMYFREE" />
+    <meta property="og:title" content="UDEMYFREE" />
+    <meta
+      property="og:description"
+      content="كورسات يوديمي مدفوعة مجاناً عبر كوبونات محدثة باستمرار."
+    />
+    <meta
+      property="og:url"
+      content="https://udemy-course-coupon.vercel.app/"
+    />
+    <meta
+      property="og:image"
+      content="https://udemy-course-coupon.vercel.app/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- ================= Twitter Card ================= -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="UDEMYFREE" />
+    <meta
+      name="twitter:description"
+      content="كورسات يوديمي مدفوعة مجاناً عبر كوبونات محدثة باستمرار."
+    />
+    <meta
+      name="twitter:image"
+      content="https://udemy-course-coupon.vercel.app/og-image.png"
+    />
+
+    <!-- ================= Structured Data ================= -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "UDEMYFREE",
+        "url": "https://udemy-course-coupon.vercel.app/",
+        "inLanguage": "ar",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://udemy-course-coupon.vercel.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
+
   <body>
     <noscript>
-      <strong>نعتذر، ولكن UDEMYFREE لا يعمل بشكل صحيح بدون تفعيل JavaScript. يرجى تفعيله للمتابعة.</strong>
+      <strong>
+        نعتذر، ولكن UDEMYFREE لا يعمل بدون تفعيل JavaScript.
+        يرجى تفعيله للمتابعة.
+      </strong>
     </noscript>
-    
+
     <div id="app"></div>
-    
-    </body>
+  </body>
 </html>
