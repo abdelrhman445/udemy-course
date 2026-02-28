@@ -14,10 +14,13 @@
             v-model="searchQuery" 
             type="text" 
             placeholder="ابحث عن دورتك اللتي تريدها..." 
-            @keyup.enter="handleSearch"
             class="search-input"
+            @keyup.enter="handleSearch"
           >
-          <button @click="handleSearch" class="search-btn">
+          <button
+            class="search-btn"
+            @click="handleSearch"
+          >
             <span>🔍</span>
           </button>
         </div>
